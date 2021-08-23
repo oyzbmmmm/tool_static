@@ -136,7 +136,7 @@ function get_one_words() {
                     data.from_who = ''
                 }
                 if (!hitokoto) {
-                    continue;
+                    return;
                 }
                 hitokoto.innerText = data.hitokoto + '出自：' + data.from + ' - ' + data.from_who
             })
@@ -862,7 +862,7 @@ console.timeEnd();
 console.log(`%c %c\n渣代码，但也请尊重劳动成果\n%c 静谧时光FBA计算器 %c 版本：0.1 `,
     ` padding: 50px 500px;
     margin-bottom: 15px;
-    background-image: url(https://cdn.jsdelivr.net/gh/oyzbmmmm/tool_static@master/fba/static/images/hdu.gif);
+    background-image: url(https://cdn.jsdelivr.net/gh/oyzbmmmm/tool_static@main/fba/static/images/hdu.gif);
     background-size: contain;
     background-repeat: no-repeat;
     color: transparent;`,
