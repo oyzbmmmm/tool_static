@@ -135,6 +135,9 @@ function get_one_words() {
                 if (data.from_who == null) {
                     data.from_who = ''
                 }
+                if (!hitokoto) {
+                    continue;
+                }
                 hitokoto.innerText = data.hitokoto + '出自：' + data.from + ' - ' + data.from_who
             })
             .catch(console.error)
