@@ -629,9 +629,9 @@ $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#am
         //优惠券
     let coupon = $('#coupon_choose').val();
     if (coupon == 1) {
-        couponResult = $('#coupon').val() * sell_price;
+        couponResult = $('#coupon').val() * sell_price + 0.6;
     } else {
-        couponResult = sell_price - $('#coupon').val();
+        couponResult = $('#coupon').val() + 0.6;
     }
 
     var money = sell_price * rate - sell_price * commission * rate - tail * rate - shipping_fee * o_re_wei_pcs - storage_fee_d * rate - buy_price - acos * sell_price * rate / 100 - storage_fee_long * rate - three_party_fee * rate - other - couponResult * rate;
