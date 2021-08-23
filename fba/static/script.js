@@ -1,4 +1,5 @@
 console.time();
+
 function showtooltip() {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
@@ -18,7 +19,7 @@ function requestFullScreen() {
         de.webkitRequestFullScreen();
     }
 }
- 
+
 //退出全屏
 function exitFullscreen() {
     var de = document;
@@ -31,13 +32,14 @@ function exitFullscreen() {
     }
 }
 //全屏后的计时器
-var i = 5 ;
+var i = 5;
+
 function endTimeinfo() {
-    setTimeout(function(){
+    setTimeout(function() {
         i--;
-        if (i < 0 ) {
+        if (i < 0) {
             return;
-        } 
+        }
         $('#time').text(i);
         endTimeinfo();
         console.log(i)
@@ -45,25 +47,25 @@ function endTimeinfo() {
 }
 //进入二次元按钮
 $('#erciyuan_btn').click(function() {
-    i = 5;
-    $('.bg').css('z-index', 100);
-    $('.bg2').css('z-index', 99);
-    $('.bg-container').css('opacity', 1);
-    $('.page').hide();
-    $('.footer').hide();
-    $('.ads').hide();
-    $('body').addClass('to2');
-    requestFullScreen();
-    setTimeout(function(){$.alert('按2次Esc可返回正常位面')}, 500);
+        i = 5;
+        $('.bg').css('z-index', 100);
+        $('.bg2').css('z-index', 99);
+        $('.bg-container').css('opacity', 1);
+        $('.page').hide();
+        $('.footer').hide();
+        $('.ads').hide();
+        $('body').addClass('to2');
+        requestFullScreen();
+        setTimeout(function() { $.alert('按2次Esc可返回正常位面') }, 500);
         endTimeinfo();
-    setTimeout(function(){
-        $('.dialog-modal-btn button').click();
-    }, 5000);
-})
-//ESC退出全屏
-$(document).keyup(function(e){
-    var key =  e.which || e.keyCode;;
-    if(key == 27 && $('body').hasClass('to2')){
+        setTimeout(function() {
+            $('.dialog-modal-btn button').click();
+        }, 5000);
+    })
+    //ESC退出全屏
+$(document).keyup(function(e) {
+    var key = e.which || e.keyCode;;
+    if (key == 27 && $('body').hasClass('to2')) {
         $('.bg').css('z-index', -9);
         $('.bg2').css('z-index', -10);
         $('.bg-container').css('opacity', 0.05);
@@ -75,7 +77,7 @@ $(document).keyup(function(e){
 });
 
 // 异步加载背景图片url
-async function getImage() { 
+async function getImage() {
     let picUrl = '';
     let status = '';
     let image = new Image();
@@ -99,11 +101,11 @@ async function getImage() {
 // setInterval(changeBg, 7000); 
 async function changeBg() {
     let picUrl = await getImage();
-    setTimeout(async function(){
+    setTimeout(async function() {
         $('.bg').attr("src", picUrl);
         await $('.bg').fadeIn(1000);
-        setTimeout(function(){$('.bg2').attr("src", picUrl)}, 1000);
-        setTimeout(function(){$('.bg').fadeOut(100)}, 1500);
+        setTimeout(function() { $('.bg2').attr("src", picUrl) }, 1000);
+        setTimeout(function() { $('.bg').fadeOut(100) }, 1500);
         changeBg();
     }, 7000)
 }
@@ -114,7 +116,7 @@ $('document').ready(async function() {
     await changeBg();
     var requried = '<span class="requried"> *</span>';
     $('input.requried').before(requried);
-    if( device.mobile() ) {
+    if (device.mobile()) {
         console.log('是否为移动端访问：' + device.mobile());
         // $.alert('请使用电脑端访问');
         $('#erciyuan_btn').hide();
@@ -123,19 +125,19 @@ $('document').ready(async function() {
 //设置定时器一言
 // setInterval(get_one_words, 8000); 
 function get_one_words() {
-    setTimeout(function(){
+    setTimeout(function() {
         // fetch('https://international.v1.hitokoto.cn?c=c&c=l')
         fetch('https://international.v1.hitokoto.cn')
-        .then(response => response.json())
-        .then(data => {
-          const hitokoto = document.getElementById('hitokoto_text')
-        //   hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
-          if (data.from_who == null) {
-              data.from_who = ''
-          } 
-          hitokoto.innerText = data.hitokoto + '出自：' + data.from + ' - ' + data.from_who 
-        })
-        .catch(console.error)
+            .then(response => response.json())
+            .then(data => {
+                const hitokoto = document.getElementById('hitokoto_text')
+                    //   hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
+                if (data.from_who == null) {
+                    data.from_who = ''
+                }
+                hitokoto.innerText = data.hitokoto + '出自：' + data.from + ' - ' + data.from_who
+            })
+            .catch(console.error)
         get_one_words()
     }, 8000)
 }
@@ -177,7 +179,7 @@ $('#catalog').change(function() {
 });
 
 //选择按钮
-$('select').not('#cur_choose').not('#currency-one').not('#currency-two').not('#catalog').change(function(){
+$('select').not('#cur_choose').not('#currency-one').not('#currency-two').not('#catalog').change(function() {
     $('#box_gw,#box_num,#box_pcs,#package_l,#package_w,#package_h').keyup();
 });
 
@@ -209,7 +211,7 @@ $('#reset_btn').click(function() {
     $('#addtag').text('');
 });
 
-$('#reload_btn').click(function(){
+$('#reload_btn').click(function() {
     $('input').not('#rate_i').not('.rate-hidden').val(15);
     $('input').keyup();
     $('.tableexport-caption').remove();
@@ -284,7 +286,7 @@ $('#end_shipping_fee').click(function() {
     // console.log('多少箱=' + ship_box);
     // console.log('每个重=' + o_re_wei_pcs + '磅');
     var inch_weight = (end_shipping_package_l / 2.54) * (end_shipping_package_w / 2.54) * (end_shipping_package_h / 2.54) / 139;
-    
+
     var currency_val = $('#cur_choose').val();
     var cur_rmb = $('#rate_usd').val();
     var cur_cad = $('#rate_cad').val();
@@ -297,19 +299,19 @@ $('#end_shipping_fee').click(function() {
         rate = 1
     } else if (currency_val == 'CAD') {
         $('.thereparty_fee_result_cur').text('加元');
-        rate = cur_rmb/cur_cad
+        rate = cur_rmb / cur_cad
     } else if (currency_val == 'GBP') {
         $('.thereparty_fee_result_cur').text('英镑');
-        rate = cur_rmb/cur_gbp
+        rate = cur_rmb / cur_gbp
     } else if (currency_val == 'EUR') {
         $('.thereparty_fee_result_cur').text('欧元');
-        rate = cur_rmb/cur_eur
+        rate = cur_rmb / cur_eur
     } else if (currency_val == 'AUD') {
         $('.thereparty_fee_result_cur').text('澳元');
-        rate = cur_rmb/cur_aud
+        rate = cur_rmb / cur_aud
     } else if (currency_val == 'JPY') {
         $('.thereparty_fee_result_cur').text('日元');
-        rate = cur_rmb/cur_jpy
+        rate = cur_rmb / cur_jpy
     }
     // console.log(rate)
     // var rate = $('#rate_i').val();
@@ -345,10 +347,10 @@ $('#end_shipping_fee').click(function() {
     // 区分淡季和旺季
     var storage_fee_d = lfyc * 0.75 * rate * storage_month;
     var storage_fee_w = lfyc * 2.4 * rate * storage_month;
-    
+
     $('#storage_month_fee_d').val(storage_fee_d);
     $('#storage_month_fee_w').val(storage_fee_w);
-    
+
     if (inch_weight > o_re_wei_pcs && inch_weight && o_re_wei_pcs) {
         finally_weight = inch_weight;
         finally_weight_info = '体积重' + inch_weight.toFixed(2) + 'Lb(磅)大于实重' + o_re_wei_pcs.toFixed(2) + 'Lb(磅)，属于：';
@@ -361,7 +363,7 @@ $('#end_shipping_fee').click(function() {
     }
     if (three_party) {
         var three_party_fee = (finally_weight * thereparty_fee).toFixed(4);
-        $('#thereparty_fee_result').val(three_party_fee*rate);
+        $('#thereparty_fee_result').val(three_party_fee * rate);
     } else {
         three_party_fee = 0;
         $('#thereparty_fee_result').val(0);
@@ -371,107 +373,107 @@ $('#end_shipping_fee').click(function() {
     $('#end_shipping_result').html(finally_weight_info);
     if (small_light && !cloth && end_shipping_package_l / 2.54 <= 15 && end_shipping_package_w / 2.54 <= 12 && end_shipping_package_h / 2.54 <= 0.75 && finally_weight <= 0.0625 * 6) {
         $('#end_shipping_result_is').html(' 轻小物品-标准小件1');
-        $('#tail').val(2.16*rate);
+        $('#tail').val(2.16 * rate);
     } else if (small_light && !cloth && end_shipping_package_l / 2.54 <= 15 && end_shipping_package_w / 2.54 <= 12 && end_shipping_package_h / 2.54 <= 0.75 && finally_weight > 0.0625 * 6 && finally_weight <= 12 * 0.0625) {
         $('#end_shipping_result_is').html(' 轻小物品-标准小件2');
-        $('#tail').val(2.35*rate);
+        $('#tail').val(2.35 * rate);
     } else if (small_light && !cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight <= 0.0625 * 6) {
         $('#end_shipping_result_is').html(' 轻小物品-标准大件3');
-        $('#tail').val(2.35*rate);
+        $('#tail').val(2.35 * rate);
     } else if (small_light && !cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight > 0.0625 * 6 && finally_weight <= 0.0625 * 12) {
         $('#end_shipping_result_is').html(' 轻小物品-标准大件4');
-        $('#tail').val(2.60*rate);
+        $('#tail').val(2.60 * rate);
     } else if (small_light && !cloth && ((end_shipping_package_l / 2.54 > 18 || end_shipping_package_w / 2.54 > 14 || end_shipping_package_h / 2.54 > 8) || finally_weight > 0.0625 * 12)) {
         $('#end_shipping_result_is').html(' 你选择了轻小物品-但是尺寸不合标准');
         $.alert('哦豁，尺寸不合标准, 已取消勾选');
-        $('#issmall').prop("checked",false);
+        $('#issmall').prop("checked", false);
         $('#tail').val(''); //轻小件非服装判断结束
     } else if (!small_light && !cloth && end_shipping_package_l / 2.54 <= 15 && end_shipping_package_w / 2.54 <= 12 && end_shipping_package_h / 2.54 <= 0.75 && finally_weight <= 0.0625 * 6) {
         $('#end_shipping_result_is').html(' 标准小件1');
-        $('#tail').val(2.70*rate);
+        $('#tail').val(2.70 * rate);
     } else if (!small_light && !cloth && end_shipping_package_l / 2.54 <= 15 && end_shipping_package_w / 2.54 <= 12 && end_shipping_package_h / 2.54 <= 0.75 && finally_weight > 0.0625 * 6 && finally_weight < 0.0625 * 12) {
         $('#end_shipping_result_is').html(' 标准小件2');
-        $('#tail').val(2.84*rate);
+        $('#tail').val(2.84 * rate);
     } else if (!small_light && !cloth && end_shipping_package_l / 2.54 <= 15 && end_shipping_package_w / 2.54 <= 12 && end_shipping_package_h / 2.54 <= 0.75 && finally_weight > 0.0625 * 12 && finally_weight < 0.0625 * 16) {
         $('#end_shipping_result_is').html(' 标准小件3');
-        $('#tail').val(3.32*rate); //标准小件判断结束
+        $('#tail').val(3.32 * rate); //标准小件判断结束
     } else if (!small_light && !cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight <= 0.0625 * 6) {
         $('#end_shipping_result_is').html(' 标准大件1');
-        $('#tail').val(3.47*rate);
+        $('#tail').val(3.47 * rate);
     } else if (!small_light && !cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight > 0.0625 * 6 && finally_weight < 0.0625 * 12) {
         $('#end_shipping_result_is').html(' 标准大件2');
-        $('#tail').val(3.64*rate);
+        $('#tail').val(3.64 * rate);
     } else if (!small_light && !cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight > 0.0625 * 12 && finally_weight < 0.0625 * 16) {
         $('#end_shipping_result_is').html(' 标准大件3');
-        $('#tail').val(4.25*rate);
+        $('#tail').val(4.25 * rate);
     } else if (!small_light && !cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight > 1 && finally_weight < 2) {
         $('#end_shipping_result_is').html(' 标准大件4 <i class="fa fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="尺寸小于18” x 14” x 8” - 重量1+ to 2 lb"></i>');
-        $('#tail').val(4.95*rate);
+        $('#tail').val(4.95 * rate);
         showtooltip();
     } else if (!small_light && !cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight > 2 && finally_weight < 3) {
         $('#end_shipping_result_is').html(' 标准大件5');
-        $('#tail').val(5.68*rate);
+        $('#tail').val(5.68 * rate);
     } else if (!small_light && !cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight > 3 && finally_weight < 20) {
         $('#end_shipping_result_is').html(' 标准大件6');
-        $('#tail').val((5.68 + (finally_weight - 3) * 0.3)*rate); //标准大件判断结束
+        $('#tail').val((5.68 + (finally_weight - 3) * 0.3) * rate); //标准大件判断结束
 
     } else if (!small_light && !cloth && (end_shipping_package_l / 2.54 < 60 && end_shipping_package_w / 2.54 < 30 && (end_shipping_package_l / 2.54 + (end_shipping_package_w / 2.54 + end_shipping_package_h / 2.54) * 2 < 130) && finally_weight < 70)) {
         $('#end_shipping_result_is').html(' 超重小件');
-        $('#tail').val((8.66 + (finally_weight - 1) * 0.38)*rate); //超长小件判断结束
+        $('#tail').val((8.66 + (finally_weight - 1) * 0.38) * rate); //超长小件判断结束
     } else if (!small_light && !cloth && end_shipping_package_l / 2.54 < 108 && (end_shipping_package_l / 2.54 + (end_shipping_package_w / 2.54 + end_shipping_package_h / 2.54) * 2 < 130) && finally_weight < 150) {
         $('#end_shipping_result_is').html(' 超重中件');
-        $('#tail').val((11.37 + (finally_weight - 1) * 0.39)*rate); //超长中件判断结束
+        $('#tail').val((11.37 + (finally_weight - 1) * 0.39) * rate); //超长中件判断结束
     } else if (!small_light && !cloth && end_shipping_package_l / 2.54 < 108 && (end_shipping_package_l / 2.54 + (end_shipping_package_w / 2.54 + end_shipping_package_h / 2.54) * 2 < 165) && finally_weight < 150) {
         $('#end_shipping_result_is').html(' 超重大件');
-        $('#tail').val((76.57 + (finally_weight ? finally_weight > 90 : finally_weight = 90 - 90) * 0.79)*rate); //超长大件判断结束
+        $('#tail').val((76.57 + (finally_weight ? finally_weight > 90 : finally_weight = 90 - 90) * 0.79) * rate); //超长大件判断结束
     } else if (!small_light && !cloth && (end_shipping_package_l / 2.54 > 108 || (end_shipping_package_l / 2.54 + (end_shipping_package_w / 2.54 + end_shipping_package_h / 2.54) * 2 > 180) || finally_weight > 150)) {
         $('#end_shipping_result_is').html(' 特重大件，无穷大');
-        $('#tail').val((138.11 + (finally_weight ? finally_weight > 90 : finally_weight = 90 - 90) * 0.79)*rate); //特大件判断结束
+        $('#tail').val((138.11 + (finally_weight ? finally_weight > 90 : finally_weight = 90 - 90) * 0.79) * rate); //特大件判断结束
 
     } else if (cloth && small_light && end_shipping_package_l / 2.54 <= 15 && end_shipping_package_w / 2.54 <= 12 && end_shipping_package_h / 2.54 <= 0.75 && finally_weight <= 0.0625 * 6) {
         $('#end_shipping_result_is').html(' 衣服轻小物品-标准小件');
-        $('#tail').val(2.16*rate);
+        $('#tail').val(2.16 * rate);
     } else if (cloth && small_light && end_shipping_package_l / 2.54 <= 15 && end_shipping_package_w / 2.54 <= 12 && end_shipping_package_h / 2.54 <= 0.75 && finally_weight > 0.0625 * 6 && finally_weight <= 12 * 0.0625) {
         $('#end_shipping_result_is').html(' 衣服轻小物品-标准小件');
-        $('#tail').val(2.35*rate);
+        $('#tail').val(2.35 * rate);
     } else if (cloth && small_light && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight <= 0.0625 * 6) {
         $('#end_shipping_result_is').html(' 衣服轻小物品-标准大件');
-        $('#tail').val(2.35*rate);
+        $('#tail').val(2.35 * rate);
     } else if (cloth && small_light && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight > 0.0625 * 6 && finally_weight <= 0.0625 * 12) {
         $('#end_shipping_result_is').html(' 衣服轻小物品-标准大件');
-        $('#tail').val(2.60*rate);
+        $('#tail').val(2.60 * rate);
     } else if (cloth && small_light && ((end_shipping_package_l / 2.54 > 18 || end_shipping_package_w / 2.54 > 14 || end_shipping_package_h / 2.54 > 8) || finally_weight > 0.0625 * 12)) {
         $('#end_shipping_result_is').html(' 你选择了衣服轻小物品-但是尺寸不合标准，请再次确认');
         $.alert('哦豁，尺寸不合标准， 已取消勾选');
-        $('#issmall').prop("checked",false);
+        $('#issmall').prop("checked", false);
         $('#tail').val(''); //衣服轻小件判断结束
     } else if (!small_light && cloth && end_shipping_package_l / 2.54 <= 15 && end_shipping_package_w / 2.54 <= 12 && end_shipping_package_h / 2.54 <= 0.75 && finally_weight <= 0.0625 * 6) {
         $('#end_shipping_result_is').html(' 衣服-标准小件');
-        $('#tail').val(3.00*rate);
+        $('#tail').val(3.00 * rate);
     } else if (!small_light && cloth && end_shipping_package_l / 2.54 <= 15 && end_shipping_package_w / 2.54 <= 12 && end_shipping_package_h / 2.54 <= 0.75 && finally_weight > 0.0625 * 6 && finally_weight < 0.0625 * 12) {
         $('#end_shipping_result_is').html(' 衣服-标准小件');
-        $('#tail').val(3.14*rate);
+        $('#tail').val(3.14 * rate);
     } else if (!small_light && cloth && end_shipping_package_l / 2.54 <= 15 && end_shipping_package_w / 2.54 <= 12 && end_shipping_package_h / 2.54 <= 0.75 && finally_weight > 0.0625 * 12 && finally_weight < 0.0625 * 16) {
         $('#end_shipping_result_is').html(' 衣服-标准小件');
-        $('#tail').val(3.62*rate); //衣服标准小件判断结束
+        $('#tail').val(3.62 * rate); //衣服标准小件判断结束
     } else if (!small_light && cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight <= 0.0625 * 6) {
         $('#end_shipping_result_is').html(' 衣服-标准大件1');
-        $('#tail').val(3.87*rate);
+        $('#tail').val(3.87 * rate);
     } else if (!small_light && cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight > 0.0625 * 6 && finally_weight < 0.0625 * 12) {
         $('#end_shipping_result_is').html(' 衣服-标准大件2');
-        $('#tail').val(4.04*rate);
+        $('#tail').val(4.04 * rate);
     } else if (!small_light && cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight > 0.0625 * 12 && finally_weight < 0.0625 * 16) {
         $('#end_shipping_result_is').html(' 衣服-标准大件3');
-        $('#tail').val(4.65*rate);
+        $('#tail').val(4.65 * rate);
     } else if (!small_light && cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight > 1 && finally_weight < 2) {
         $('#end_shipping_result_is').html(' 衣服-标准大件4');
-        $('#tail').val(5.34*rate);
+        $('#tail').val(5.34 * rate);
     } else if (!small_light && cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight > 2 && finally_weight < 3) {
         $('#end_shipping_result_is').html(' 衣服-标准大件5');
-        $('#tail').val(6.08*rate);
+        $('#tail').val(6.08 * rate);
     } else if (!small_light && cloth && end_shipping_package_l / 2.54 <= 18 && end_shipping_package_w / 2.54 <= 14 && end_shipping_package_h / 2.54 <= 8 && finally_weight > 3 && finally_weight < 20) {
         $('#end_shipping_result_is').html(' 衣服-标准大件6');
-        $('#tail').val((6.08 + (finally_weight - 3) * 0.3)*rate); //衣服标准大件判断结束
+        $('#tail').val((6.08 + (finally_weight - 3) * 0.3) * rate); //衣服标准大件判断结束
     } else {
         $('#end_shipping_result_is').html(' 判断逻辑出错，请检查数据');
         $('#tail').val(''); //其他情况
@@ -484,7 +486,7 @@ $('#end_shipping_fee').click(function() {
 $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#amount-two').keyup(function() {
     if ($('#sell_price').val() >= 7 && $('#issmall').is(':checked')) {
         $.alert('哦豁，轻小物品，售价不能超7美金, 已取消勾选');
-        $('#issmall').prop("checked",false);
+        $('#issmall').prop("checked", false);
     }
     $('#end_shipping_fee').click();
     var ship_box = $('#box_pcs').val();
@@ -528,7 +530,7 @@ $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#am
 
     //判断空值
     $("input").not('input.other_i').not('input.vat_i').each(function() {
-        if($.trim($(this).val()) == "") {// 判断value值是否为空
+        if ($.trim($(this).val()) == "") { // 判断value值是否为空
             $(this).css('border-color', 'red').delay(5000); //延时貌似无效
             // $(this).focus(); //太快了.mother fucker!
             // setTimeout($(this).focus(), 5000);//然并卵,卒
@@ -537,7 +539,7 @@ $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#am
             $(this).css('border-color', '');
         }
     });
-    
+
     //最低佣金
     if (y_fee < 0.3) {
         y_fee = 0.3;
@@ -639,7 +641,7 @@ $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#am
     // console.log('中转= USD' + three_party_fee);
     // console.log('其他= RMB' + other);
     money_w = Number(money_w).toFixed(4);
-    
+
     var currency_val = $('#cur_choose').val();
     if (currency_val == 'USD') {
         var cur_result = '美元，'
@@ -654,7 +656,7 @@ $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#am
     } else if (currency_val == 'JPY') {
         cur_result = '日元，'
     }
-    
+
     var three_party_fee = $('#thereparty_fee_result').val();
     //输出结果
     $('#amz_result').html(
@@ -670,11 +672,11 @@ $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#am
         '<tr><td><span>销售佣金：</span></td><td><span>' + y_fee + cur_result + (y_fee * rate).toFixed(4) + '元</span></td></tr>' +
         '<tr><td><span>尾程派送费：</span></td><td><span>' + tail.toFixed(4) + cur_result + (tail * rate).toFixed(4) + '元</span></td></tr>' +
         '<tr><td><span>海外仓中转：</span></td><td><span>' + three_party_fee + cur_result + (three_party_fee * rate).toFixed(4) + '元</span></td></tr>' +
-        '<tr><td><span>预计仓储费：</span></td><td><span>单件占用仓储：' + lfyc.toFixed(4) + '立方英尺，存放' + storage_month + '月，淡季' + storage_fee_d.toFixed(4) +  cur_result +'旺季：' + storage_fee_w.toFixed(4) + cur_result + '</span></td></tr>' +
+        '<tr><td><span>预计仓储费：</span></td><td><span>单件占用仓储：' + lfyc.toFixed(4) + '立方英尺，存放' + storage_month + '月，淡季' + storage_fee_d.toFixed(4) + cur_result + '旺季：' + storage_fee_w.toFixed(4) + cur_result + '</span></td></tr>' +
         '<tr><td><span>长期仓储费：</span></td><td><span>' + storage_fee_long + '</span></td></tr>' +
-        '<tr><td><span>毛利润：</span></td><td><span>淡季：' + (money / rate).toFixed(4) + cur_result + money + '元。 旺季：' + (money_w / rate).toFixed(4) + cur_result  + money_w + '元。</span></td></tr>' +
+        '<tr><td><span>毛利润：</span></td><td><span>淡季：' + (money / rate).toFixed(4) + cur_result + money + '元。 旺季：' + (money_w / rate).toFixed(4) + cur_result + money_w + '元。</span></td></tr>' +
         '<tr><td><span>毛利率：</span></td><td><span>淡季：' + (((money / rate) / sell_price * 100)).toFixed(4) + '%。 旺季：' + (((money_w / rate) / sell_price * 100)).toFixed(4) + '%</span></td></tr>' +
-        '<tr><td><span>费用预估：</span></td><td><span>货值' + (buy_price*total_pieces).toFixed(2) + '元，运费：' + (shipping_fee * total_re_weight).toFixed(2) + '元，共' + (buy_price*total_pieces + shipping_fee * total_re_weight).toFixed(2) + '预计利润' + (money*total_pieces).toFixed(4) + '元' + '，投资回报率：' + ((money*total_pieces)/(buy_price*total_pieces + shipping_fee * total_re_weight)*100).toFixed(2) + '%</span></td></tr>' +
+        '<tr><td><span>费用预估：</span></td><td><span>货值' + (buy_price * total_pieces).toFixed(2) + '元，运费：' + (shipping_fee * total_re_weight).toFixed(2) + '元，共' + (buy_price * total_pieces + shipping_fee * total_re_weight).toFixed(2) + '预计利润' + (money * total_pieces).toFixed(4) + '元' + '，投资回报率：' + ((money * total_pieces) / (buy_price * total_pieces + shipping_fee * total_re_weight) * 100).toFixed(2) + '%</span></td></tr>' +
         '</tbody></table>' +
         '<button type="button" id="add_to_table" class="btn btn-success btn-block"><i class="fa fa-file-excel-o" aria-hidden="true"></i> 添加结果至下表(对比)</button>' +
         '<code class="inquiry">数据不对？去<a href="https://www.silencetime.com/archives/215/" target="_blank">提交反馈</a>,</code><span>功能有问题，Crrl+F5刷新缓存即可！</span>'
@@ -695,7 +697,7 @@ $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#am
     $('.result_table').show();
     var item = 0;
     var cur_result = '$';
-    $('#add_to_table').click(function(){
+    $('#add_to_table').click(function() {
         $('.tableexport-caption').remove();
         if (!$('caption').hasClass('tableexport-caption')) {
             $('.exportToExcel').show();
@@ -718,31 +720,31 @@ $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#am
         // cell data types (string, number, boolean, date)
         // 单元格有时候自动格式会出现bug,需要手动指定格式，ex. tableexport-date为指定日期，会被格式化为日期
         var add_content = '<tr class="can_remove"> ' +
-                            '<td>' + item + '</td> <!--Item-->' +
-                            '<td class="tableexport-string">' + cur_result + Number((buy_price/rate).toFixed(2)) + '</td> <!--采购价-->' +
-                            '<td class="tableexport-string">' + re_pieces + '</td> <!--每箱数量-->' +
-                            '<td class="tableexport-string">' + ship_box + '</td> <!--箱数-->' +
-                            '<td class="tableexport-string">' + Number((re_gw/ship_box).toFixed(2)) + '</td> <!--每箱毛重-->' +
-                            '<td class="tableexport-string">' + re_wh_l + '*' + re_wh_w + '*' + re_wh_h + '</td> <!--箱子尺寸-->' +
-                            '<td class="tableexport-string">' + Number((re_wh/ship_box).toFixed(2)) + '</td> <!--体积重-->' +
-                            '<td class="tableexport-string">' + shipping_mod + '</td> <!--运输方式-->' +
-                            '<td class="tableexport-string">' + cur_result + Number((shipping_fee * o_re_wei_pcs / rate).toFixed(2)) + '</td> <!--运输单价-->' +
-                            '<td class="tableexport-string">' + cur_result + Number((shipping_fee/rate).toFixed(2)) + '</td> <!--运费单价-->' +
-                            '<td class="tableexport-string">' + cur_result + Number(sell_price.toFixed(2)) + '</td> <!--售价-->' +
-                            '<td class="tableexport-string">' + cur_result + Number((+y_fee).toFixed(2)) + '</td> <!--佣金-->' +
-                            '<td class="tableexport-string">' + cur_result + Number(tail.toFixed(2)) + '</td> <!--尾程-->' +
-                            '<td class="tableexport-string">' + storage_month + '</td> <!--储存时长-->' +
-                            '<td class="tableexport-string">' + cur_result + Number(storage_fee_d.toFixed(2)) + '</td> <!--淡季存储-->' +
-                            '<td class="tableexport-string">' + cur_result + Number(storage_fee_w.toFixed(2)) + '</td> <!--旺-->' +
-                            '<td class="tableexport-string">' + cur_result + Number((money / rate).toFixed(2)) + '</td> <!--淡季利润-->' +
-                            '<td class="tableexport-string">' + cur_result + Number((money_w / rate).toFixed(2)) + '</td> <!--旺-->' +
-                            '<td class="tableexport-string">' + (((money / rate) / sell_price * 100)).toFixed(2) + '%</td> <!--淡季利率-->' +
-                            '<td class="tableexport-string">' + (((money_w / rate) / sell_price * 100)).toFixed(2) + '%</td> <!--旺-->' +
-                           '</tr>';
+            '<td>' + item + '</td> <!--Item-->' +
+            '<td class="tableexport-string">' + cur_result + Number((buy_price / rate).toFixed(2)) + '</td> <!--采购价-->' +
+            '<td class="tableexport-string">' + re_pieces + '</td> <!--每箱数量-->' +
+            '<td class="tableexport-string">' + ship_box + '</td> <!--箱数-->' +
+            '<td class="tableexport-string">' + Number((re_gw / ship_box).toFixed(2)) + '</td> <!--每箱毛重-->' +
+            '<td class="tableexport-string">' + re_wh_l + '*' + re_wh_w + '*' + re_wh_h + '</td> <!--箱子尺寸-->' +
+            '<td class="tableexport-string">' + Number((re_wh / ship_box).toFixed(2)) + '</td> <!--体积重-->' +
+            '<td class="tableexport-string">' + shipping_mod + '</td> <!--运输方式-->' +
+            '<td class="tableexport-string">' + cur_result + Number((shipping_fee * o_re_wei_pcs / rate).toFixed(2)) + '</td> <!--运输单价-->' +
+            '<td class="tableexport-string">' + cur_result + Number((shipping_fee / rate).toFixed(2)) + '</td> <!--运费单价-->' +
+            '<td class="tableexport-string">' + cur_result + Number(sell_price.toFixed(2)) + '</td> <!--售价-->' +
+            '<td class="tableexport-string">' + cur_result + Number((+y_fee).toFixed(2)) + '</td> <!--佣金-->' +
+            '<td class="tableexport-string">' + cur_result + Number(tail.toFixed(2)) + '</td> <!--尾程-->' +
+            '<td class="tableexport-string">' + storage_month + '</td> <!--储存时长-->' +
+            '<td class="tableexport-string">' + cur_result + Number(storage_fee_d.toFixed(2)) + '</td> <!--淡季存储-->' +
+            '<td class="tableexport-string">' + cur_result + Number(storage_fee_w.toFixed(2)) + '</td> <!--旺-->' +
+            '<td class="tableexport-string">' + cur_result + Number((money / rate).toFixed(2)) + '</td> <!--淡季利润-->' +
+            '<td class="tableexport-string">' + cur_result + Number((money_w / rate).toFixed(2)) + '</td> <!--旺-->' +
+            '<td class="tableexport-string">' + (((money / rate) / sell_price * 100)).toFixed(2) + '%</td> <!--淡季利率-->' +
+            '<td class="tableexport-string">' + (((money_w / rate) / sell_price * 100)).toFixed(2) + '%</td> <!--旺-->' +
+            '</tr>';
         $('#addtag').append(add_content);
         // 移除行，视需求
         // $('.can_remove').click(function(){
-        $('.can_remove:last-child').dblclick(function(){
+        $('.can_remove:last-child').dblclick(function() {
             $(this).remove();
             $('.tableexport-caption').remove();
             if (!$('caption').hasClass('tableexport-caption')) {
@@ -771,23 +773,23 @@ $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#am
 // });
 //https://github.com/clarketm/TableExport
 //导出excel新版 xslx csv txt
-$(".exportToExcel").click(function(){
+$(".exportToExcel").click(function() {
     /* Defaults */
     $(this).hide();
-    let d=new Date().getTime()
+    let d = new Date().getTime()
     $("#table2excel").tableExport({
-    headers: true,
-    footers: true, 
-    formats: ["xlsx", "csv", "txt"],
-    filename: "静谧时光FBA计算器" + d, 
-    bootstrap: false,  
-    exportButtons: true,  
-    position: "bottom", 
-    ignoreRows: null,   
-    ignoreCols: null,    
-    trimWhitespace: false,   
-    RTL: false,  
-    sheetname: "静谧时光FBA计算器" + d  
+        headers: true,
+        footers: true,
+        formats: ["xlsx", "csv", "txt"],
+        filename: "静谧时光FBA计算器" + d,
+        bootstrap: false,
+        exportButtons: true,
+        position: "bottom",
+        ignoreRows: null,
+        ignoreCols: null,
+        trimWhitespace: false,
+        RTL: false,
+        sheetname: "静谧时光FBA计算器" + d
     });
 });
 
@@ -855,13 +857,13 @@ $('#year').text(year);
 
 console.timeEnd();
 console.log(`%c %c\n渣代码，但也请尊重劳动成果\n%c 静谧时光FBA计算器 %c 版本：0.1 `,
-  ` padding: 50px 500px;
+    ` padding: 50px 500px;
     margin-bottom: 15px;
-    background-image: url(https://cloud.willslight.com/?explorer/share/file&hash=de1a_viSaSOelurKZVBIJuf4jo7fVXGholkRxsAe2oZ2CRqHuTnzszA2lxk&name=/hdu.gif);
+    background-image: url(https://cdn.jsdelivr.net/gh/oyzbmmmm/tool_static@master/fba/static/images/hdu.gif);
     background-size: contain;
     background-repeat: no-repeat;
-    color: transparent;`, 
-  'color: #3eaf7c; font-size: 16px;margin-bottom: 10px;',
-  'background: #35495e; padding: 4px; border-radius: 3px 0 0 3px; color: #fff', 
-  'background: #41b883; padding: 4px; border-radius: 0 3px 3px 0; color: #fff',
+    color: transparent;`,
+    'color: #3eaf7c; font-size: 16px;margin-bottom: 10px;',
+    'background: #35495e; padding: 4px; border-radius: 3px 0 0 3px; color: #fff',
+    'background: #41b883; padding: 4px; border-radius: 0 3px 3px 0; color: #fff',
 );
