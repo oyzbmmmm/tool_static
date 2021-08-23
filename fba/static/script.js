@@ -131,7 +131,6 @@ function get_one_words() {
             .then(response => response.json())
             .then(data => {
                 const hitokoto = document.getElementById('hitokoto_text')
-                    //   hitokoto.href = 'https://hitokoto.cn/?uuid=' + data.uuid
                 if (data.from_who == null) {
                     data.from_who = ''
                 }
