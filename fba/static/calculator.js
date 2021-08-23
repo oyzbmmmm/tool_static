@@ -626,9 +626,17 @@ $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#am
     var storage_fee_long = Number($('#long_storage_fee').val());
     var storage_month = Number($('#storage_month').val());
     var three_party_fee = Number($('#thereparty_fee_result').val())
-    var money = sell_price * rate - sell_price * commission * rate - tail * rate - shipping_fee * o_re_wei_pcs - storage_fee_d * rate - buy_price - acos * sell_price * rate / 100 - storage_fee_long * rate - three_party_fee * rate - other;
+        //优惠券
+    let coupon = $('#coupon_choose').val();
+    if (coupon == 1) {
+        couponResult = $('#coupon').val() * sell_price;
+    } else {
+        couponResult = sell_price - $('#coupon').val();
+    }
+
+    var money = sell_price * rate - sell_price * commission * rate - tail * rate - shipping_fee * o_re_wei_pcs - storage_fee_d * rate - buy_price - acos * sell_price * rate / 100 - storage_fee_long * rate - three_party_fee * rate - other - couponResult * rate;
     // console.log('淡季利润 = ' + money);
-    var money_w = sell_price * rate - sell_price * commission * rate - tail * rate - shipping_fee * o_re_wei_pcs - storage_fee_w * rate - buy_price - acos * sell_price * rate / 100 - storage_fee_long * rate - three_party_fee * rate - other;
+    var money_w = sell_price * rate - sell_price * commission * rate - tail * rate - shipping_fee * o_re_wei_pcs - storage_fee_w * rate - buy_price - acos * sell_price * rate / 100 - storage_fee_long * rate - three_party_fee * rate - other - couponResult * rate;
     // console.log('旺季利润 = ' + money_w);
     money = Number(money).toFixed(4);
     // console.log('利润= USD' + money);
