@@ -22,7 +22,8 @@
 			switch (type) {
 				case 'alert':
 					html += '<div class="dialog-modal-title">'+title+'</div>';
-					html += '<div class="dialog-modal-text">'+content+' <span id="time">5</span>秒后消失</div>';
+				// 	html += '<div class="dialog-modal-text">'+content+' <span id="time">5</span>秒后消失</div>'; //显示计时器
+					html += '<div class="dialog-modal-text">'+content+'</div>';
 					html += '<div class="dialog-modal-btn">';
 					html += '<button type="button">'+confirmText+'</button>';
 					break;
