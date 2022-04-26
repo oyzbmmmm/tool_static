@@ -35,7 +35,9 @@ function exitFullscreen() {
 var i = 5;
 
 function endTimeinfo() {
-    setTimeout(function() {
+    let t;
+    clearTimeout(t);
+    t = setTimeout(function() {
         i--;
         if (i < 0) {
             return;
@@ -58,7 +60,9 @@ $('#erciyuan_btn').click(function() {
         requestFullScreen();
         setTimeout(function() { $.alert('按2次Esc可返回正常位面') }, 500);
         endTimeinfo();
-        setTimeout(function() {
+        let t;
+        clearTimeout(t);
+        t = setTimeout(function() {
             $('.dialog-modal-btn button').click();
         }, 5000);
     })
@@ -81,7 +85,7 @@ async function getImage() {
     let picUrl = '';
     let status = '';
     let image = new Image();
-    await fetch('https://tool.silencetime.com/acg-api/random.php?return=json')
+    await fetch('https://api.ooii.io/mc/random.php?return=json')
         .then(response => response.json())
         .then(data => {
             // picUrl = 'url("' + data.imgurl + '")';
@@ -101,13 +105,15 @@ async function getImage() {
 // setInterval(changeBg, 7000); 
 async function changeBg() {
     let picUrl = await getImage();
-    setTimeout(async function() {
-        $('.bg').attr("src", picUrl);
-        await $('.bg').fadeIn(1000);
-        setTimeout(function() { $('.bg2').attr("src", picUrl) }, 1000);
-        setTimeout(function() { $('.bg').fadeOut(100) }, 1500);
-        changeBg();
-    }, 7000)
+    let t 
+    clearTimeout(t);
+    t = setTimeout(async function() {
+            $('.bg').attr("src", picUrl);
+            await $('.bg').fadeIn(1000);
+            setTimeout(function() { $('.bg2').attr("src", picUrl) }, 1000);
+            setTimeout(function() { $('.bg').fadeOut(100) }, 1500);
+            changeBg();
+        }, 7000)
 }
 
 // 一言和必填
@@ -125,23 +131,21 @@ $('document').ready(async function() {
 //设置定时器一言
 // setInterval(get_one_words, 8000); 
 function get_one_words() {
-    setTimeout(function() {
-        // fetch('https://international.v1.hitokoto.cn?c=c&c=l')
-        fetch('https://international.v1.hitokoto.cn')
+    let t;
+    clearTimeout(t);
+    t = setTimeout(function() {
+        fetch('https://api.ooii.io/dujt/api.php?code=json')
             .then(response => response.json())
             .then(data => {
-                const hitokoto = document.getElementById('hitokoto_text')
-                if (data.from_who == null) {
-                    data.from_who = ''
-                }
-                if (!hitokoto) {
+                const hitokoto = document.getElementById('one')
+                if (data.code != '200' || !hitokoto) {
                     return;
                 }
-                hitokoto.innerText = data.hitokoto + '出自：' + data.from + ' - ' + data.from_who
+                hitokoto.innerText = data.msg
             })
             .catch(console.error)
         get_one_words()
-    }, 8000)
+    }, 5000)
 }
 
 // 这是一个练习，逻辑混乱 选择类目
@@ -477,7 +481,7 @@ $('#end_shipping_fee').click(function() {
         $('#end_shipping_result_is').html(' 衣服-标准大件6');
         $('#tail').val((6.08 + (finally_weight - 3) * 0.3) * rate); //衣服标准大件判断结束
     } else {
-        $('#end_shipping_result_is').html(' 判断逻辑出错，请检查数据');
+        $('#end_shipping_result_is').html(' 判断逻辑出错，请检查数据,检查上面的重量和尺寸是否遗漏');
         $('#tail').val(''); //其他情况
     }
 
@@ -628,10 +632,12 @@ $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#am
     var three_party_fee = Number($('#thereparty_fee_result').val())
         //优惠券
     let coupon = $('#coupon_choose').val();
-    if (coupon == 1) {
+    if (coupon == 1 && $('#coupon').val() != '') {
         couponResult = Number($('#coupon').val()) / 100 * sell_price + 0.6;
-    } else {
+    } else if (coupon == 2 && $('#coupon').val() != '') {
         couponResult = Number($('#coupon').val()) + 0.6;
+    } else {
+        couponResult = 0
     }
     console.log(couponResult)
     console.log($('#coupon').val())
@@ -686,6 +692,7 @@ $("input").not('#currency-one').not('#currency-two').not('#amount-one').not('#am
         '<tr><td><span>海外仓中转：</span></td><td><span>' + three_party_fee + cur_result + (three_party_fee * rate).toFixed(4) + '元</span></td></tr>' +
         '<tr><td><span>预计仓储费：</span></td><td><span>单件占用仓储：' + lfyc.toFixed(4) + '立方英尺，存放' + storage_month + '月，淡季' + storage_fee_d.toFixed(4) + cur_result + '旺季：' + storage_fee_w.toFixed(4) + cur_result + '</span></td></tr>' +
         '<tr><td><span>长期仓储费：</span></td><td><span>' + storage_fee_long + '</span></td></tr>' +
+        '<tr><td><span>优惠券：</span></td><td><span>' + couponResult + '</span></td></tr>' +
         '<tr><td><span>毛利润：</span></td><td><span>淡季：' + (money / rate).toFixed(4) + cur_result + money + '元。 旺季：' + (money_w / rate).toFixed(4) + cur_result + money_w + '元。</span></td></tr>' +
         '<tr><td><span>毛利率：</span></td><td><span>淡季：' + (((money / rate) / sell_price * 100)).toFixed(4) + '%。 旺季：' + (((money_w / rate) / sell_price * 100)).toFixed(4) + '%</span></td></tr>' +
         '<tr><td><span>费用预估：</span></td><td><span>货值' + (buy_price * total_pieces).toFixed(2) + '元，运费：' + (shipping_fee * total_re_weight).toFixed(2) + '元，共' + (buy_price * total_pieces + shipping_fee * total_re_weight).toFixed(2) + '预计利润' + (money * total_pieces).toFixed(4) + '元' + '，投资回报率：' + ((money * total_pieces) / (buy_price * total_pieces + shipping_fee * total_re_weight) * 100).toFixed(2) + '%</span></td></tr>' +
@@ -789,20 +796,24 @@ $(".exportToExcel").click(function() {
     /* Defaults */
     $(this).hide();
     let d = new Date().getTime()
-    $("#table2excel").tableExport({
-        headers: true,
-        footers: true,
-        formats: ["xlsx", "csv", "txt"],
-        filename: "静谧时光FBA计算器" + d,
-        bootstrap: false,
-        exportButtons: true,
-        position: "bottom",
-        ignoreRows: null,
-        ignoreCols: null,
-        trimWhitespace: false,
-        RTL: false,
-        sheetname: "静谧时光FBA计算器" + d
-    });
+    let t;
+    clearTimeout(t);
+    t = setTimeout(function(){
+        $("#table2excel").tableExport({
+            headers: true,
+            footers: true,
+            formats: ["xlsx", "csv", "txt"],
+            filename: "静谧时光FBA计算器" + d,
+            bootstrap: false,
+            exportButtons: true,
+            position: "bottom",
+            ignoreRows: null,
+            ignoreCols: null,
+            trimWhitespace: false,
+            RTL: false,
+            sheetname: "静谧时光FBA计算器" + d
+        })
+    },500);
 });
 
 //btn btn-info xlsx col-4
